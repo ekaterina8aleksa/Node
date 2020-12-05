@@ -1,11 +1,12 @@
 const fs = require("fs").promises;
 const path = require("path");
+const Joi = require("joi");
 
 class Contacts {
     constructor() {
         this.FILE_CONTACTS_PATH = path.resolve(
             __dirname,
-            "db",
+            "../../db",
             "contacts.json"
         );
     }
@@ -32,7 +33,7 @@ class Contacts {
     addContact = async (name, email, phone) => {
         try {
             const contactsData = await this.listContacts();
-            const id = contactsData.length ? [...contactsData].pop().id + 1 : 1; //or contactsData.length + 1
+            const id = contactsData.length ? [...contactsData].pop().id + 1 : 1; // or contactsData.length + 1;nanoid();
             const newContact = { id, name, email, phone };
             await contactsData.push(newContact);
             const contactsDataJson = JSON.stringify(contactsData);
@@ -45,7 +46,7 @@ class Contacts {
     removeContact = async (contactId) => {
         try {
             const contactsData = await this.listContacts();
-            const result = await contactsData.filter(
+            let result = await contactsData.filter(
                 (contact) => contact.id !== contactId
             );
             await fs.writeFile(this.FILE_CONTACTS_PATH, JSON.stringify(result));
@@ -54,6 +55,33 @@ class Contacts {
             console.log(`Error deleting contact with id ${contactId}`, err);
         }
     };
+
+    updateContact = async (contactId, name, email, phone) => {
+        try {
+            const contactsData = await this.listContacts();
+            let contact = await contactsData.find(
+                contact => { 
+                    if (contact.id === contactId) {
+                    return contact;
+                  }
+                 });
+                const updateContact = {
+                ...contact,
+                id: contactId,
+                name: name,
+                email: email,
+                phone: phone,
+            }
+            await contactsData.push(updateContact);
+            const contactsDataJson = JSON.stringify(contactsData);
+            await fs.writeFile(this.FILE_CONTACTS_PATH, contactsDataJson);
+            return updateContact;
+        }
+        catch (err) {
+            console.log(`Error updating contact with id ${contactId}`, err);
+        }
+    }
+
 }
 
 module.exports = new Contacts();
