@@ -12,7 +12,7 @@ const runServer = async () => {
 await mongoose .connect(process.env.DB_URI, {useUnifiedTopology: true});
 console.log('Database connection successful');
 
-  const app = express();
+const app = express();
 
 app.use(express.json());
 app.use(cors());
