@@ -1,6 +1,6 @@
 const Contacts = require('./contacts');
 
-const listContactsController =  (req, res, next) => {
+const listContactsController = async (req, res, next) => {
     try{
         const contacts = await Contacts.listContacts();
         return res.status(200).json(contacts);
