@@ -1,8 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
-const Joi = require("joi");
-
 class Contacts {
+
     constructor() {
         this.FILE_CONTACTS_PATH = path.resolve(
             __dirname,
@@ -10,11 +9,10 @@ class Contacts {
             "contacts.json"
         );
     }
+
     listContacts = async () => {
         try {
-            const contactsData = await fs.readFile(this.FILE_CONTACTS_PATH, {
-                encoding: "utf-8",
-            });
+            const contactsData = await fs.readFile(this.FILE_CONTACTS_PATH, "utf-8");
             return JSON.parse(contactsData);
         } catch (err) {
             console.log("Error getting contacts", err);
@@ -43,12 +41,12 @@ class Contacts {
             console.log("Error adding new contact", err);
         }
     };
+
     removeContact = async (contactId) => {
         try {
             const contactsData = await this.listContacts();
             let result = await contactsData.filter(
-                (contact) => contact.id !== contactId
-            );
+                (contact) => contact.id !== contactId);
             await fs.writeFile(this.FILE_CONTACTS_PATH, JSON.stringify(result));
             return result;
         } catch (err) {
@@ -63,8 +61,8 @@ class Contacts {
                 contact => { 
                     if (contact.id === contactId) {
                     return contact;
-                  }
-                 });
+                    }
+                });
                 const updateContact = {
                 ...contact,
                 id: contactId,
@@ -81,7 +79,7 @@ class Contacts {
             console.log(`Error updating contact with id ${contactId}`, err);
         }
     }
-
 }
 
 module.exports = new Contacts();
+

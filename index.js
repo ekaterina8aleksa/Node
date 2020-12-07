@@ -5,7 +5,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
 const contactsRouter = require('./api/contacts/router');
-
 const app = express();
 
 app.use(express.json());
