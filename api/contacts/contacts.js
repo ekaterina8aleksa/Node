@@ -1,6 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 class Contacts {
+
     constructor() {
         this.FILE_CONTACTS_PATH = path.resolve(
             __dirname,
@@ -45,8 +46,7 @@ class Contacts {
         try {
             const contactsData = await this.listContacts();
             let result = await contactsData.filter(
-                (contact) => contact.id !== contactId
-            );
+                (contact) => contact.id !== contactId);
             await fs.writeFile(this.FILE_CONTACTS_PATH, JSON.stringify(result));
             return result;
         } catch (err) {
@@ -82,3 +82,4 @@ class Contacts {
 }
 
 module.exports = new Contacts();
+
