@@ -3,6 +3,7 @@ const path = require("path");
 const Joi = require("joi");
 
 class Contacts {
+
     constructor() {
         this.FILE_CONTACTS_PATH = path.resolve(
             __dirname,
@@ -10,6 +11,8 @@ class Contacts {
             "contacts.json"
         );
     }
+
+
     listContacts = async () => {
         try {
             const contactsData = await fs.readFile(this.FILE_CONTACTS_PATH, "utf-8");

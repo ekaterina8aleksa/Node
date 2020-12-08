@@ -23,3 +23,4 @@ contactsRouter.delete('/:userId', deleteContactController)
 contactsRouter.patch('/', updateContactController)
 
 module.exports = contactsRouter;
+
