@@ -6,57 +6,26 @@ const morgan = require('morgan');
 const express = require('express');
 const contactsRouter = require('./api/contacts/router');
 const mongoose = require('mongoose');
-
+const authRouter = require('./api/auth/authRouter');
 
 const runServer = async () => {
-await mongoose .connect(process.env.DB_URI, {useUnifiedTopology: true});
-console.log('Database connection successful');
+    try {
+        await mongoose .connect(process.env.DB_URI, {useUnifiedTopology: true});
+        console.log('Database connection successful');
 
-const app = express();
-
-app.use(express.json());
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use('/contacts', contactsRouter);
-
-app.listen(PORT, () => console.log(`Server running on port: ${PORT} `));
-
+        const app = express();
+        app.use(express.json());
+        app.use(cors());
+        app.use(morgan('dev'));
+        app.use(express.json());
+        app.use('/auth', authRouter);
+        app.use('/contacts', contactsRouter);
+        app.listen(PORT, () => console.log(`Server running on port: ${PORT} `));
+    }
+    catch(err) {
+        console.log('Database connection error', err);
+        process.exit(1);
+    }
 };
 
-
-
-// const Contacts = require("./contacts");
-// const argv = require("yargs").argv;
-
-// function invokeAction({ action, id, name, email, phone }) {
-//     switch (action) {
-//         case "list":
-//             Contacts.listContacts().then((contacts) => console.table(contacts));
-//             break;
-
-//         case "get":
-//             Contacts.getContactById(id).then((contact) =>
-//                 console.table(contact)
-//             );
-//             break;
-
-//         case "add":
-//             Contacts.addContact(name, email, phone).then((contact) =>
-//                 console.table(contact)
-//             );
-//             break;
-
-//         case "remove":
-//             Contacts.removeContact(id).then((contacts) =>
-//                 console.table(contacts)
-//             );
-//             break;
-
-//         default:
-//             console.warn("\x1B[31m Unknown action type!");
-//     }
-// }
-
-// invokeAction(argv);
-
+runServer();
