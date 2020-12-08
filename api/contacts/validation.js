@@ -39,3 +39,4 @@ module.exports.validateCreateContact = (req, res, next) => {
 module.exports.validateUpdateContact = (req, res, next) => {
         return validationUpdating(req, res, next)
     }
+

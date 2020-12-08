@@ -1,5 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
+const Joi = require("joi");
+
 class Contacts {
 
     constructor() {
@@ -9,6 +11,7 @@ class Contacts {
             "contacts.json"
         );
     }
+
 
     listContacts = async () => {
         try {
@@ -46,7 +49,8 @@ class Contacts {
         try {
             const contactsData = await this.listContacts();
             let result = await contactsData.filter(
-                (contact) => contact.id !== contactId);
+                (contact) => contact.id !== contactId
+            );
             await fs.writeFile(this.FILE_CONTACTS_PATH, JSON.stringify(result));
             return result;
         } catch (err) {
@@ -79,7 +83,7 @@ class Contacts {
             console.log(`Error updating contact with id ${contactId}`, err);
         }
     }
+
 }
 
 module.exports = new Contacts();
-
