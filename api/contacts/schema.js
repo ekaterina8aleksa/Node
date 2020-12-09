@@ -22,7 +22,7 @@ class ContactModel {
     constructor(){
         this.db =  mongoose.model('Contact', contactSchema);
     }
-    getContacts = async () => {
+    getAllContacts = async () => {
         return await this.db.find();
     }
     createContact = async contactData => {

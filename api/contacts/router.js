@@ -13,9 +13,9 @@ contactsRouter.get('/', getContactsController)
 
 contactsRouter.post('/',createContactsController )
 
-contactsRouter.get('/:userId', getByIdContactController)
+contactsRouter.get('/:id', getByIdContactController)
 
-contactsRouter.delete('/:userId', deleteContactController)
+contactsRouter.delete('/:id', deleteContactController)
 
 contactsRouter.patch('/', updateContactController)
 
