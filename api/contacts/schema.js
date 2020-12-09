@@ -16,7 +16,7 @@ const contactSchema = new mongoose.Schema({
         unique: true,
     },
 
-}, {versionKey: false});
+});
 
 class ContactModel {
     constructor(){

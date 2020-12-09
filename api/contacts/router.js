@@ -7,9 +7,6 @@ const {
     updateContactController
 } = require('./contactsController')
 
-// const Controllers = require('./controller');
-// const { validateCreateContact, validateUpdateContact} = require('./validation')
-
 const contactsRouter = Router();
 
 contactsRouter.get('/', getContactsController)
