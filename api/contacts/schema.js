@@ -15,9 +15,7 @@ const contactSchema = new mongoose.Schema({
         require: true,
         unique: true,
     },
-
 });
-
 class ContactModel {
     constructor(){
         this.db =  mongoose.model('Contact', contactSchema);
@@ -38,7 +36,5 @@ class ContactModel {
         return await this.db.findByIdAndUpdate(contactId, contactNewData, {new: true});
     }
 }
-
-// const ContactModel =  mongoose.model('Contact', contactSchema);
 
 module.exports = new ContactModel;

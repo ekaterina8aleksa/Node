@@ -7,28 +7,42 @@ const express = require('express');
 const contactsRouter = require('./api/contacts/router');
 const mongoose = require('mongoose');
 const authRouter = require('./api/auth/authRouter');
+const path = require('path');
 
-<<<<<<< HEAD
-app.use(express.json());
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use('/contacts', contactsRouter);
-app.listen(PORT, () => console.log(`Server running on port: ${PORT} `));
-=======
 const runServer = async () => {
     try {
         await mongoose .connect(process.env.DB_URI, {useUnifiedTopology: true});
         console.log('Database connection successful');
->>>>>>> ba9d50cafa19e6a59f30579c291b588b120e0c25
 
         const app = express();
+
+        app.use(express.static(path.resolve(__dirname, 'public')))
+
         app.use(express.json());
         app.use(cors());
         app.use(morgan('dev'));
         app.use(express.json());
         app.use('/auth', authRouter);
         app.use('/contacts', contactsRouter);
+
+        app.use(async (err, req, res, next) => {
+            if (err) {
+            let logs = await fs.readFile('errors.logs.json', { encoding: 'utf-8' });
+            logs = JSON.parse(logs);
+            logs.push({
+                date: new Date().toISOString(),
+                method: req.method,
+                originalUrl: req.originalUrl,
+                name: err.message,
+            });
+            logs = JSON.stringify(logs);
+            console.error(err);
+            res.status(500).send(err.message);
+            return await fs.writeFile('errors.logs.json', logs);
+            }
+            console.log('No error');
+        });
+
         app.listen(PORT, () => console.log(`Server running on port: ${PORT} `));
     }
     catch(err) {

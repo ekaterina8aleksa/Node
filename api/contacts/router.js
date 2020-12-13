@@ -1,17 +1,18 @@
 const {Router} = require('express');
+
 const {
-    getContactsController,
+    getAllContactsController,
     createContactsController,
     getByIdContactController,
     deleteContactController,
     updateContactController
-} = require('./contactsController')
+} = require('./contactsController');
 
 const contactsRouter = Router();
 
-contactsRouter.get('/', getContactsController)
+contactsRouter.get('/', getAllContactsController)
 
-contactsRouter.post('/',createContactsController )
+contactsRouter.post('/', createContactsController )
 
 contactsRouter.get('/:id', getByIdContactController)
 
