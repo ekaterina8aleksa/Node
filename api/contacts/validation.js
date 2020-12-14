@@ -24,11 +24,11 @@ const validationUpdating = (req, res, next) => {
     const bodyLength = Object.keys(req.body).length;
     if (bodyLength === 0) {
         return res.status(400).send({ message: 'missing fields' });
-    }
+        }
     const result = schemaUpdate.validate(req.body);
     if (result.error) {
         return res.status(400).send({ message: 'invalid format of data' });
-    }
+        }
     next();
 };
 

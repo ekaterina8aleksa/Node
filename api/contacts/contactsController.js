@@ -1,8 +1,8 @@
 const ContactModel = require('./schema');
 
-const getContactsController = async (req, res, next) => {
+const getAllContactsController = async (req, res, next) => {
     try{
-        const contacts = await ContactModel.getContacts();
+        const contacts = await ContactModel.getAllContacts();
         res.json(contacts);
     } catch (err){
         next(err);
@@ -21,9 +21,9 @@ const createContactsController = async (req, res, next) => {
 
 const getByIdContactController = async (req, res, next) => {
     try{
-        const {userId} = req.params;
-        const justContact = await ContactModel.getByIdContact(userId);
-        res.status(200).json(justContact);
+        const {id} = req.params;
+        const byIdContact = await ContactModel.getByIdContact(id);
+        res.status(200).json(byIdContact);
     } catch (err){
         next(err);
     }
@@ -31,8 +31,8 @@ const getByIdContactController = async (req, res, next) => {
 
 const deleteContactController = async (req, res, next) => {
     try{
-        const {userId} = req.params;
-        const deletedContact = await ContactModel.deleteContact(userId);
+        const {id} = req.params;
+        const deletedContact = await ContactModel.deleteContact(id);
         res.status(200).json({message: 'contact deleted'});
     } catch (err){
         next(err);
@@ -50,7 +50,7 @@ const updateContactController = async (req, res, next) => {
 }
 
 module.exports = {
-    getContactsController, 
+    getAllContactsController, 
     createContactsController,
     getByIdContactController,
     deleteContactController,
