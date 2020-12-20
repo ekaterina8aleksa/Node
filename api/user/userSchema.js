@@ -20,8 +20,6 @@ const userSchema = new mongoose.Schema({
     },
     avatarURL: {
         type: String,
-        required: true,
-        default: 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png'
     },
     verificationToken: {
         type: String,

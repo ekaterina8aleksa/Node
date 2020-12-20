@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/ekaterina8aleksa/Node#readme",
   "dependencies": {
+    "avatar-builder": "^1.0.1",
+    "avatar-generator": "^2.0.4",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
