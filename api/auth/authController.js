@@ -1,10 +1,13 @@
 const UserModel = require('../user/userSchema');
 const bcrypt = require('bcrypt');
 const {createVerificationToken} = require('../services/tokenService');
+const { sendEmail } = require('../../services/mail.service');
 
 const registrationController = async (req, res, next) => {
     try{
         const {body} = req;
+        const {body: { email },} = req;
+        await sendEmail(email, token);
         
         const hashedPassword = await bcrypt.hash(body.password, Number(process.env.SALT));
         await UserModel.createUser({
