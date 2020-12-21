@@ -10,6 +10,6 @@ const usersRouter = Router();
 
 usersRouter.get("/current", checkAuthTokenMiddleware, getCurrentUserController);
 
-usersRouter.post("/avatar", checkAuthTokenMiddleware,  avatarUploaderMiddleware, uploaderAvatarController);
+usersRouter.post("/avatars", checkAuthTokenMiddleware,  avatarUploaderMiddleware, uploaderAvatarController);
 
 module.exports = usersRouter;

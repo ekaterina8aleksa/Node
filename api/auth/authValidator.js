@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const RegistrationSchema = Joi.object({
+const RegistrationLoginSchema = Joi.object({
     name: Joi
         .string().alphanum().min(2).max(16),
 
@@ -15,7 +15,7 @@ const RegistrationSchema = Joi.object({
     token: Joi.string(),
 });
 
-const validationMiddleware = schema => async (req, res, next) => {
+const validationRegistration = schema => async (req, res, next) => {
         const { error } = await schema.validate(req.body);
         if (error) {
             const message = error.details.reduce((msg, nextErr) => {
@@ -30,6 +30,16 @@ const validationMiddleware = schema => async (req, res, next) => {
         next();
 };
 
+const validationLogin = schema => async (req, res, next) => {
+    const { error } = await schema.validate(req.body);
+    if (error) {
+        res.status(400).send('Error from validator');
+        return;
+    }
+    next();
+    };
+
 module.exports = {
-    registrationAndLoginValidatorMiddleware: validationMiddleware(RegistrationSchema),
+    registrationValidatorMiddleware: validationRegistration(RegistrationLoginSchema),
+    loginValidatorMiddleware: validationLogin(RegistrationLoginSchema),
 }

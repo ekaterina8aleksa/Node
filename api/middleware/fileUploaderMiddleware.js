@@ -1,10 +1,10 @@
 const multer = require('multer');
+const { publicImagesPath} = require('../../config');
 
 const avatarUploader = () => {
     const storage = multer.diskStorage({
         destination: function (req, file, cd) {
-            cd(null, '../../public/avatars')
-        },
+            cd(null, publicImagesPath)},
         filename: function (req, file, cd) {
             const fileType = file.mimetype.split('/')[1];
             if(fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {

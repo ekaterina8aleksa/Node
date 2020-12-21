@@ -1,10 +1,11 @@
 const {Router} = require('express');
-const { registrationController, loginController,logoutController } = require('./authController');
-const { registrationAndLoginValidatorMiddleware} = require('../auth/authValidator')
+const {registrationController, loginController,logoutController } = require('./authController');
+const {registrationValidatorMiddleware, loginValidatorMiddleware} = require('../auth/authValidator');
+const {checkAuthTokenMiddleware } = require('../middleware/authMiddleware')
 const authRouter = Router();
 
-authRouter.post('/registration', registrationAndLoginValidatorMiddleware, registrationController);
-authRouter.post('/login', registrationAndLoginValidatorMiddleware, loginController);
-authRouter.post('/logout', logoutController);
+authRouter.post('/registration', registrationValidatorMiddleware, registrationController);
+authRouter.post('/login', loginValidatorMiddleware, loginController);
+authRouter.post('/logout',checkAuthTokenMiddleware, logoutController);
 
 module.exports = authRouter;

@@ -1,5 +1,6 @@
 // const PORT = process.env.PORT || 3000;
 const UserModel = require('./userSchema');
+const {createAvatarUrl} = require('../../config')
 
 const getCurrentUserController = async (req, res, next) => {
     try {
@@ -23,12 +24,18 @@ const uploaderAvatarController = async (req, res, next) => {
     try {
         const file  = req.file;
         const {userId} = req;
-        await UserModel.updateUser(userId, {avatar: file.path}, {new: true});
-        res.send(`http://localhost:3000/avatars/${file.filename}`);
+        const UserById = await UserModel.getUserById(userId);
+            if(!UserById.token) {
+                return res.status(401).json({message: "Not authorized"});
+            };
+        const avatarURL = createAvatarUrl(file.filename);
+        await UserModel.updateUser(userId, {avatarURL: avatarURL}, {new: true});
+        res.send({"avatarURL": avatarURL});
     } catch (err) {
         next({message: err});
     };
 };
+
 
 module.exports = {
     getCurrentUserController, 

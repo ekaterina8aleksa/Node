@@ -7,6 +7,7 @@ const express = require('express');
 const contactsRouter = require('./api/contacts/router');
 const mongoose = require('mongoose');
 const authRouter = require('./api/auth/authRouter');
+const userRouter = require('./api/user/userRouter');
 const path = require('path');
 
 const runServer = async () => {
@@ -24,6 +25,8 @@ const runServer = async () => {
         app.use(express.json());
         app.use('/auth', authRouter);
         app.use('/contacts', contactsRouter);
+        app.use('/users', userRouter);
+        
 
         app.use(async (err, req, res, next) => {
             if (err) {
